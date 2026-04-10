@@ -1,0 +1,10 @@
+## Interface: 120000, 120001, 120005
+## Title: FeralBleedPower
+## Author: Drufearr
+## Category: Drufearr
+## IconTexture: Interface/ICONS/Spell_druid_bloodythrash
+## SavedVariables: FeralBleedPowerDB
+
+FeralBleedPower.lua
+FrameChooser.lua
+
