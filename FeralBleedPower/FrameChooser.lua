@@ -175,7 +175,8 @@ end
 function fbp.resize()
 	for _, f in pairs(fbp.text_frames) do
 		if _G[f] then
-			_G[f]:SetFont("Fonts\\"..(FeralBleedPowerDB["font_fam"] or "FRIZQT__")..".TTF", FeralBleedPowerDB["font_size"] or 20, "OUTLINE")
+			local font = FeralBleedPowerDB["font_fam"] and "Interface\\FONTS\\"..FeralBleedPowerDB["font_fam"]..".TTF" or "FONTS\\FRIZQT__.TTF"
+			_G[f]:SetFont(font, FeralBleedPowerDB["font_size"] or 20, "OUTLINE")
 		end
 	end
 end

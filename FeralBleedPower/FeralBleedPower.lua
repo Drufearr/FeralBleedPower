@@ -77,7 +77,8 @@ local function initStrength()
 		frame.t:ClearAllPoints()
 		frame.t:SetPoint("CENTER")
 		frame.t:EnableMouse(true)
-		frame.t:SetFont("Fonts\\"..(FeralBleedPowerDB["font_fam"] or "FRIZQT__")..".TTF", FeralBleedPowerDB["font_size"] or 20, "OUTLINE")
+		local font = FeralBleedPowerDB["font_fam"] and "Interface\\FONTS\\"..FeralBleedPowerDB["font_fam"]..".TTF" or "FONTS\\FRIZQT__.TTF"
+		frame.t:SetFont(font, FeralBleedPowerDB["font_size"] or 20, "OUTLINE")
 		frame.t:SetText("---")
 		
 		f.DotStrength[spellID] = frame
