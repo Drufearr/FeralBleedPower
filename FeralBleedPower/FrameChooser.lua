@@ -147,7 +147,7 @@ end
 
 
 function fbp.reanchor(frame, anchor)
-	if not anchor or frame == anchor then return end
+	if (not anchor) or (not frame) or (frame == anchor) then return end
 	frame:ClearAllPoints()
 	frame:GetParent():SetFrameLevel(anchor:GetFrameLevel() + 100)
 	frame:SetPoint(

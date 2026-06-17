@@ -1,6 +1,49 @@
 _, fbp = ...
-
 FeralBleedPowerDB = FeralBleedPowerDB or {} 
+
+SLASH_FERALBLEEDPOWER1 = "/fbp"
+SlashCmdList["FERALBLEEDPOWER"] = function(msg)
+	local ok, err = pcall(function()
+		local args = {}
+		for arg in msg:gmatch("%S+") do
+			table.insert(args, arg)
+		end
+		local cmd = args[1] or ""
+		
+		if not fbp or not fbp.text_frames then
+			print("|cFFFF0000FBP:|r addon not fully loaded yet. Try /reload.")
+			return
+		end
+		
+		if fbp.text_frames[cmd] then
+			fbp.startFrameChooser(_G[fbp.text_frames[cmd]])
+		elseif cmd == "fontsize" then
+			FeralBleedPowerDB["font_size"] = tonumber(args[2])
+			fbp.resize()
+		elseif cmd == "font" then
+			FeralBleedPowerDB["font_fam"] = args[2]
+			fbp.resize()
+		elseif cmd == "reset" then
+			FeralBleedPowerDB = {}
+			print("FBP: settings reset, /reload and then go through the setup again.")
+		elseif cmd == "anchor" then
+			FeralBleedPowerDB["relative_point"] = args[2] or "CENTER"
+			FeralBleedPowerDB["anchor_point"] = args[3] or "CENTER"
+			FeralBleedPowerDB["x_off"] = args[4] or 0
+			FeralBleedPowerDB["y_off"] = args[5] or 0
+			fbp.anchorFrames()
+		else 
+			print("FBP: position commands: |c00FFF200/fbp rake|r, |c0000FFF2/fbp li|r, |c00FF9900/fbp rip|r")
+			print("FBP: other commands: /fbp fontsize <number>, /fbp anchor <relative_point?> <anchor_point?> <x_offset?> <y_offset?>")
+			print("FBP: for custom typeface: /fbp font <name>; requires adding the font to 'interface/FONTS/' folder. e.g. /fbp font Expressway")
+			print("FBP: to reset all settings: /fbp reset")
+		end
+	end)
+	if not ok then
+		print("|cFFFF0000FBP Error:|r " .. tostring(err))
+	end
+end
+
 local f = CreateFrame("Frame")
 f.DotStrength = {}
 local active_dots = {}
@@ -78,7 +121,8 @@ local function initStrength()
 		frame.t:SetPoint("CENTER")
 		frame.t:EnableMouse(true)
 		local font = FeralBleedPowerDB["font_fam"] and "Interface\\FONTS\\"..FeralBleedPowerDB["font_fam"]..".TTF" or "FONTS\\FRIZQT__.TTF"
-		frame.t:SetFont(font, FeralBleedPowerDB["font_size"] or 20, "OUTLINE")
+		local font_size = tonumber(FeralBleedPowerDB["font_size"]) or 20
+		frame.t:SetFont(font, font_size, "OUTLINE")
 		frame.t:SetText("---")
 		
 		f.DotStrength[spellID] = frame
@@ -298,31 +342,3 @@ end)
 
 
 
-SLASH_FERALBLEEDPOWER1 = "/fbp"
-SlashCmdList["FERALBLEEDPOWER"] = function(msg)
-	local args = {}
-	for arg in msg:gmatch("%S+") do
-		table.insert(args, arg)
-	end
-	local cmd = args[1] or ""
-	
-	if fbp.text_frames[cmd] then
-		fbp.startFrameChooser(_G[fbp.text_frames[cmd]])
-	elseif cmd == "font" then
-		FeralBleedPowerDB["font_size"] = args[2]
-		fbp.resize()
-	elseif cmd == "typeface" then
-		FeralBleedPowerDB["font_fam"] = args[2]
-		fbp.resize()
-	elseif cmd == "anchor" then
-		FeralBleedPowerDB["relative_point"] = args[2] or "CENTER"
-		FeralBleedPowerDB["anchor_point"] = args[3] or "CENTER"
-		FeralBleedPowerDB["x_off"] = args[4] or 0
-		FeralBleedPowerDB["y_off"] = args[5] or 0
-		fbp.anchorFrames()
-	else 
-		print("FBP: position commands: |c00FFF200/fbp rake|r, |c0000FFF2/fbp li|r, |c00FF9900/fbp rip|r")
-		print("FBP: other commands: /fbp font <number>, /fbp anchor <relative_point?> <anchor_point?> <x_offset?> <y_offset?>")
-		print("FBP: for custom typeface: /fbp typeface <name>; requires adding the font to 'interface/FONTS/' folder. e.g. /fbp typeface Expressway")
-	end
-end
