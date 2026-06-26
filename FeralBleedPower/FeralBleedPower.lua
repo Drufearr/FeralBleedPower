@@ -244,7 +244,6 @@ local function initHooks()
 			local cdID = child.cooldownID
 			if cdID then
 				local spellID = child.cooldownInfo and child.cooldownInfo.spellID or C_CooldownViewer.GetCooldownViewerCooldownInfo(cdID)
-				print(cdID, spellID)
 				if tracked_dots[spellID] and spellID ~= 285381 then -- not pw
 					hookFrame(child)
 				elseif tf_id[spellID] then
