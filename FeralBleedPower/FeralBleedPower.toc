@@ -1,4 +1,4 @@
-## Interface: 120005, 120007, 20100
+## Interface: 120005, 120007, 120100
 ## Title: FeralBleedPower
 ## Author: Drufearr
 ## Category: Drufearr
